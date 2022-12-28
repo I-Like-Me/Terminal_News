@@ -1,4 +1,5 @@
-from flask import Flask, request, redirect, url_for
+from flask import Flask
+import assets
 
 app = Flask(__name__)
 
@@ -6,10 +7,10 @@ app = Flask(__name__)
 @app.route('/home')
 def home():
     return '''<h1>Hello, World!</h1>
-    <=input name="text">
-    <a href="/articles/<entry>">Return to home page</a>
+    <a href="/articles/kevin">Go to kevin</a>
+    <a href="/articles/steve">Go to steve</a>
+    <a href="/articles/cindy">Go to Cindy</a>
     '''
-    #<input type="submit">
 
 @app.route('/articles/<article_name>')
 def article(article_name):
