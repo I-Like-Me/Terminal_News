@@ -1,5 +1,4 @@
-#import psycopg2
-#from config import config
+import connector
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import pandas as pd
@@ -9,7 +8,7 @@ api = Api(app)
 
 players_path = 'csv_vault/Characters_Players.csv'
 class Players(Resource):
-    def get(self):
+    def get(self, table):
         data = pd.read_csv(players_path)  # read CSV
         data = data.to_dict()  # convert dataframe to dictionary
         return {'data': data}, 200  # return data and 200 OK code
