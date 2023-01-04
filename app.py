@@ -9,7 +9,7 @@ def index():
 
 @app.route("/articles/<int:id>")
 def articles(id):
-  return render_template("article.html", template_articles=terminal_api.Players("Characters_Players", '"name"').get()['name'][id])
+  return render_template("article.html", template_articles=terminal_api.Players("Characters_Players", '"name"').get()['name'][id], template_origin=terminal_api.Players("Characters_Players", '"origin"').get()['origin'][id])
 
 if __name__ == "__main__":
     app.run(debug=True)
