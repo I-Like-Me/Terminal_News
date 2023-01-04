@@ -2,14 +2,16 @@ import connector
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import pandas as pd
+import connector
 
 app = Flask(__name__)
 api = Api(app)
 
-players_path = 'csv_vault/Characters_Players.csv'
+table = "Characters_Players"
+
 class Players(Resource):
-    def get(self, table):
-        data = pd.read_csv(players_path)  # read CSV
+    def get(self):
+        data = connector.connect_table(table)
         data = data.to_dict()  # convert dataframe to dictionary
         return {'data': data}, 200  # return data and 200 OK code
 
@@ -22,13 +24,7 @@ class Players(Resource):
       
         args = parser.parse_args()
 
-        #new_data = pd.DataFrame({
-            #'name': args['name'],
-            #'origin': args['origin'],
-            #'current race': args['current race']
-        #})
-
-        data = pd.read_csv(players_path)
+        data = connector.connect_table(table)
 
         if args['name'] in data['name']:
             return {
@@ -41,8 +37,7 @@ class Players(Resource):
                 'current race': args['current race']
             }, ignore_index=True)   
 
-        #data = data.append(new_data, ignore_index=True)
-        data.to_csv(players_path, index=False)
+        data.to_csv(table, index=False)
         return {'data': data.to_dict()}, 200
 
 
