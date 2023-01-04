@@ -2,7 +2,7 @@
 {% block content %}
   <h1>Terminal News</h1>
   <p>Available Articles</p>
-  {% for id, names in template_articles['name'].items() %}
+  {% for id, names in template_articles.items() %}
     <p><a href="/articles/{{ id }}">{{ names }}</a></p>
   {% endfor %}
 {% endblock %}

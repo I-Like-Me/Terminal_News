@@ -1,24 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>{{ template_article | title }}</h1>
-    
-    {% if template_description %}
-      <p>{{ template_description }}</p>
-    {%else%}
-      <p>A {{ template_article }} recipe.</p>
-    {% endif %}
-    
-    <h3>Weapons - {{ template_weapons | length}}</h3>
-    <ul>
-    {% for ingredient in template_ingredients %}
-        <li>{{ weapons }}</li>
-    {% endfor %}
-    </ul>
+    <h1>{{ template_articles | title }}</h1>
 
-    <h3>Affiliations</h3>
-    <ul>
-    {% for key, instruction in template_instructions|dictsort %}
-        <li>{{ affiliations }}</li>
-    {% endfor %}
-    </ul>
+
 {% endblock %}
