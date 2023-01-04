@@ -48,5 +48,6 @@ def connect_columns(table_name, *cols):
             conn.close()
             print('Database connection closed.')    
 
+
 #if __name__ == '__main__':
     #connect_columns("Characters_Players", "name", "origin")

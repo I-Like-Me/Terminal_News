@@ -7,40 +7,26 @@ import connector
 app = Flask(__name__)
 api = Api(app)
 
-table = "Characters_Players"
+table_title = "Characters_Players"
+
+column_titles = '"name"'
 
 class Players(Resource):
+    def __init__(self, table, columns=None):
+        self.table=table
+        self.columns=columns
+
     def get(self):
-        data = connector.connect_table(table)
-        data = data.to_dict()  # convert dataframe to dictionary
-        return {'data': data}, 200  # return data and 200 OK code
-
-    def post(self):
-        parser = reqparse.RequestParser()
-
-        parser.add_argument('name', required=True, type=str, location='values')
-        parser.add_argument('origin', required=True, type=str, location='values')
-        parser.add_argument('current race', required=True, type=str, location='values')
-      
-        args = parser.parse_args()
-
-        data = connector.connect_table(table)
-
-        if args['name'] in data['name']:
-            return {
-                'message': f"{args['name']} already exists"
-            }, 409
+        if self.columns != None:
+            return connector.connect_columns(self.table, self.columns).to_dict()
         else:
-            data = data.append({
-                'name': args['name'],
-                'origin': args['origin'],
-                'current race': args['current race']
-            }, ignore_index=True)   
-
-        data.to_csv(table, index=False)
-        return {'data': data.to_dict()}, 200
-
+            return connector.connect_table(self.table).to_dict()
+        #data = data.to_dict()  # convert dataframe to dictionary
+        #return data
+        #return {'data': data}  # return data and 200 OK code
 
 api.add_resource(Players, '/players')
-if __name__ == "__main__":
-    app.run(debug=True)
+
+
+#if __name__ == "__main__":
+    #app.run(debug=True)

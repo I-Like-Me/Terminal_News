@@ -1,20 +1,16 @@
-from flask import Flask
-import assets
+from flask import Flask, render_template
+import terminal_api
 
 app = Flask(__name__)
+kevin= terminal_api.Players("Characters_Players", '"name"')
 
 @app.route('/')
-@app.route('/home')
-def home():
-    return '''<h1>Hello, World!</h1>
-    <a href="/articles/kevin">Go to kevin</a>
-    <a href="/articles/steve">Go to steve</a>
-    <a href="/articles/cindy">Go to Cindy</a>
-    '''
+def index():
+    return render_template("index.html", template_articles=kevin.get())
 
-@app.route('/articles/<article_name>')
-def article(article_name):
-    return f'''
-    <h2>{article_name.replace('-', ' ').title()}</h2>
-    <a href="/">Return to home page</a>
-    '''
+#@app.route("/recipe/<int:id>")
+#def recipe(id):
+  #return render_template("article.html", template_recipe=recipes[id], template_description=descriptions[id], template_ingredients=ingredients[id], template_instructions=instructions[id])
+
+if __name__ == "__main__":
+    app.run(debug=True)
